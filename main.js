@@ -24,6 +24,7 @@ const openMenu = (index) => {
     const inputColor = document.querySelector("#color");
     const inputGlowColor = document.querySelector("#glow");
     const presetsSelect = document.querySelector("#presets");
+    presetsSelect.value = "";
     const title = titles[index];
     input.value = title.innerText;
     let colors = JSON.parse(title.getAttribute("color"));
