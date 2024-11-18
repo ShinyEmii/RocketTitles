@@ -6,6 +6,7 @@ const presets = {
     "RLCS": ["AEF7FF", "43AFFF"],
     "RLCS Challenger": ["43CDFF", "9966CC"],
     "Tourney Lime": ["9BFF00"],
+    "Tourney White": ["F0FFF9", "F0FFF9"],
     "Tourney Pink": ["FF8DDD", "FF8DDD"],
     "GC": ["FF2800", "FF2800"],
     "SSL": ["E8E8E8", "E8E8E8"]
@@ -24,9 +25,18 @@ const openMenu = (index) => {
     const inputColor = document.querySelector("#color");
     const inputGlowColor = document.querySelector("#glow");
     const presetsSelect = document.querySelector("#presets");
+    const background = document.querySelector("#background");
+    background.oninput = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => document.body.style.backgroundImage = `url(${e.target.result})`;
+            reader.readAsDataURL(file);
+        }
+    }
     presetsSelect.value = "";
     const title = titles[index];
-    input.value = title.innerText;
+    input.value = JSON.parse(title.getAttribute("title"));
     let colors = JSON.parse(title.getAttribute("color"));
     inputColor.value = colors[0];
     if (colors.length > 1)
@@ -68,11 +78,21 @@ document.addEventListener("DOMContentLoaded", () => {
         option.innerHTML = preset;
         presetsSelect.appendChild(option);
     }
-    for (const title of titleElements)
+    for (const title of titleElements) {
+        title.setAttribute("title", JSON.stringify(title.innerText));
         titles.push(title);
+    }
     for (let i = 0; i < titles.length; i++) {
-        resizeTitle(i);
-        setTitleColor(i, presets["Default"])
+        let stored = JSON.parse(localStorage.getItem(i));
+        if (stored != null) {
+            let titleStored = JSON.parse(stored.title);
+            let colorStored = JSON.parse(stored.color);
+            setTitleName(i, titleStored);
+            setTitleColor(i, colorStored);
+        } else {
+            setTitleName(i, JSON.parse(titles[i].getAttribute("title")));
+            setTitleColor(i, presets["Default"])
+        }
         titles[i].onclick = () => openMenu(i);
     }
 });
@@ -87,17 +107,26 @@ const hexToText = (hex) => {
         const b = parseInt(hex.substring(4, 6), 16);
         return `${r}, ${g}, ${b}`;
     }
-    return hexToText("#9fa4a8");
+    return hexToText(presets["Default"][0]);
 }
-
-const setTitle = (index, name, color) => {
-    setTitleName(index, name);
-    setTitleColor(index, color);
-}
-
 const setTitleName = (index, name) => {
     let title = titles[index];
-    title.innerText = name;
+    title.setAttribute("title", JSON.stringify(name));
+    localStorage.setItem(index, JSON.stringify({title: title.getAttribute("title"), color: title.getAttribute("color")}));
+    name = name.toLowerCase();
+    if (name.includes(":ssl:") || name.includes(":gc:") || name.includes(":champ:") || name.includes(":diamond:") || name.includes(":plat:") || name.includes(":gold:") || name.includes(":silver:") || name.includes(":bronze:"))
+        title.classList.add("small");
+    else
+        title.classList.remove("small");
+    name = name.replaceAll(":ssl:", `<img src="img/ssl.webp"/>`)
+    name = name.replaceAll(":gc:", `<img src="img/gc.webp"/>`)
+    name = name.replaceAll(":champ:", `<img src="img/champ.webp"/>`)
+    name = name.replaceAll(":diamond:", `<img src="img/diamond.webp"/>`)
+    name = name.replaceAll(":plat:", `<img src="img/plat.webp"/>`)
+    name = name.replaceAll(":gold:", `<img src="img/gold.webp"/>`)
+    name = name.replaceAll(":silver:", `<img src="img/silver.webp"/>`)
+    name = name.replaceAll(":bronze:", `<img src="img/bronze.webp"/>`)
+    title.innerHTML = name;
     resizeTitle(index);
 }
 
@@ -106,6 +135,7 @@ const setTitleColor = (index, color) => {
     let colorText = hexToText(color[0]);
     title.style.color = `rgb(${colorText})`;
     title.setAttribute("color", JSON.stringify(color));
+    localStorage.setItem(index, JSON.stringify({title: title.getAttribute("title"), color: title.getAttribute("color")}));
     if (color[1] != null) {
         let glowText = hexToText(color[1]);
         title.style.textShadow = `0 0 calc((3 / 2560) * 100vw) rgba(${colorText}, 0.3), 0 0 calc((14 / 2560) * 100vw) rgba(${glowText}, 0.6), 0 0 calc((18 / 2560) * 100vw) rgb(${glowText})`;
@@ -117,6 +147,8 @@ const setTitleColor = (index, color) => {
 const resizeTitle = (index) => {    
     let initial = 1;
     let title = titles[index];
+    if (title.classList.contains("small"))
+        initial *= 299 / 300;
     title.style.transform = `scale(${initial}, ${initial})`;
     
     while (title.scrollWidth * initial > title.offsetWidth) {

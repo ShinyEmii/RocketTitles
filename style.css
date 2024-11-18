@@ -8,7 +8,7 @@ body {
   aspect-ratio: 16/9;
   overflow: hidden;
   background: #000;
-  background-image: url("img/test.png");
+  background-image: url("img/full.png");
   background-size: cover;
 }
 body .overlay {
@@ -31,8 +31,9 @@ body .overlay .titles {
   display: block;
 }
 body .overlay .titles .title {
+  position: relative;
   margin-left: 2.206235012%;
-  filter: blur(0.25px);
+  filter: blur(0.45px);
   width: 92.5%;
   height: 12.334384858%;
   font-family: Arial;
@@ -47,6 +48,17 @@ body .overlay .titles .title {
 body .overlay .titles .title:hover {
   cursor: pointer;
   text-shadow: 0 0 0.5859375vw #fff !important;
+}
+body .overlay .titles .title img {
+  width: 21px;
+  display: inline-block;
+  vertical-align: middle;
+  top: -2px;
+}
+body .overlay .titles .small {
+  top: -1px;
+  letter-spacing: 0.0015625vw;
+  font-size: 0.78125vw;
 }
 body .menu {
   position: absolute;
