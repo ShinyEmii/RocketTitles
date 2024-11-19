@@ -2,12 +2,12 @@ const presets = {
     "Default": ["9FA4A8"],
     "Developer": ["00FFAA", "00FFFF"],
     "Special": ["00FFAA"],
-    "Legacy Champion": ["FFEB5C", "FFA300"],
     "RLCS": ["AEF7FF", "43AFFF"],
     "RLCS Challenger": ["43CDFF", "9966CC"],
     "Tourney Lime": ["9BFF00"],
     "Tourney White": ["F0FFF9", "F0FFF9"],
     "Tourney Pink": ["FF8DDD", "FF8DDD"],
+    "Old GC": ["FFEB5C", "FFA300"],
     "GC": ["FF2800", "FF2800"],
     "SSL": ["E8E8E8", "E8E8E8"]
 };
@@ -26,6 +26,13 @@ const openMenu = (index) => {
     const inputGlowColor = document.querySelector("#glow");
     const presetsSelect = document.querySelector("#presets");
     const background = document.querySelector("#background");
+    const reset = document.querySelector("#reset");
+    reset.onclick = () => {
+        for (let i = 0; i < titles.length; i++) {
+            setTitleColor(i, presets["Default"]);
+            setTitleName(i, "--");
+        }
+    }
     background.oninput = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -61,7 +68,7 @@ const openMenu = (index) => {
         colors[1] = e.target.value;
         setTitleColor(index, colors);
     }
-    menu.style.height = "15%";
+    menu.style.height = "25%";
 }
 
 const closeMenu = () => {
