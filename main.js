@@ -1,15 +1,17 @@
 const presets = {
     "Default": ["9FA4A8"],
     "Developer": ["00FFAA", "00FFFF"],
-    "Special": ["00FFAA"],
-    "RLCS": ["AEF7FF", "43AFFF"],
+    "Helper": ["00FFAA"],
+    "RLCS Champion": ["AEF7FF", "43AFFF"],
     "RLCS Challenger": ["43CDFF", "9966CC"],
-    "Tourney Lime": ["9BFF00"],
-    "Tourney White": ["F0FFF9", "F0FFF9"],
-    "Tourney Pink": ["FF8DDD", "FF8DDD"],
-    "Old GC": ["FFEB5C", "FFA300"],
+    "Legacy GC": ["FFEB5C", "FFA300"],
     "GC": ["FF2800", "FF2800"],
-    "SSL": ["E8E8E8", "E8E8E8"]
+    "SSL": ["E8E8E8", "E8E8E8"],
+    "Tournament Lime": ["9BFF00"],
+    "Tournament White": ["F0FFF9", "F0FFF9"],
+    "Tournament Pink": ["FF8DDD", "FF8DDD"],
+    "Participant (Unused)": ["FFEB5C"],
+    "Ranked Champion (Unused)": ["DBD2FF", "8C50FF"]
 };
 
 const titles = [];
