@@ -10,6 +10,8 @@ const presets = {
     "Tournament Lime": ["9BFF00"],
     "Tournament White": ["F0FFF9", "F0FFF9"],
     "Tournament Pink": ["FF8DDD", "FF8DDD"],
+    "Community": ["BF5FFF"],
+    "Community Creator": ["BF5FFF", "BF5FFF"],
     "Participant (Unused)": ["FFEB5C"],
     "Ranked Champion (Unused)": ["DBD2FF", "8C50FF"]
 };
